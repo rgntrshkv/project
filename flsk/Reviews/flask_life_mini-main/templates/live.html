@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <a class="btn btn-warning home" href="/">На главную</a>
+    <a class="btn btn-info refresh " href="{{ url_for('live' )}}">Создать новую жизнь</a>
+
+
+    <table class="world" id="data-table" value="">
+        {% for i in range(life.world|length) %}
+            <tr>
+                {% for j in range(life.world[i]|length) %}
+                        <td class="" id="td_cell_{{i}}_{{j}}"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="counter" value=""></div>
+{% endblock %}
+
+{% block scripts %}
+    {{super()}}
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+        $(document).ready( function () {
+            reload_table();
+            setInterval(reload_table, 1000);
+        });
+
+        function reload_table() {
+            $.ajax({
+                url: '/reload_table',             // указываем URL и
+                dataType : "json",                     // тип загружаемых данных
+                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+
+                    var div = document.getElementsByClassName('counter')[0]; // находим элемент по имени класса
+                    // возвращается коллекция из которой берем нулевой элемент
+                    div.innerHTML = data['counter']; // и прописываем текст взятый из json
+
+                    $('.world').show();
+                    $.each(data['cell'], function(i, val_cell) {    // обрабатываем полученные данные из json
+                        $.each(val_cell, function(j, val) {
+                            document.getElementById("td_cell_" + i + "_" + j).setAttribute('class', val);
+                        });
+                    });
+                }
+            });
+        };
+    </script>
+{% endblock %}

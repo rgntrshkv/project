@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Игра</title>
+</head>
+<body>
+    <a class="btn btn-warning home" href="{{ url_for('index') }}">Отправиться на главную страницу!</a>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% block content %}
+        <div class="content">
+            <img src="{{ url_for('static', filename='img.jpg') }}">
+            <br>
+            {% block app_content %}
+            {% endblock %}
+            <img src="{{ url_for('static', filename='sh.jpg') }}">
+            <br>
+        </div>
+    {% endblock %}
+</body>
+    {% block scripts %}
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css"/>
+    {% endblock %}
+</html>

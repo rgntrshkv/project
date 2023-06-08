@@ -1,0 +1,21 @@
+{%extends "base.html"%}
+
+{%block app_content%}
+    <h2 class="content">Игра началась!</h2>
+    <h4 class="content">Выбери сторону света и количество шагов, чтобы сделать движение</h4>
+    <h3 class="content" style="color:blueviolet;">{{msg}}</h3>
+    <div class="content" >
+        <form action = "{{ url_for('move') }}" method = "post">
+            {{mform.csrf_token}}
+            {%for field in mform if (field.name != "csrf_token" and field.name != "submit")%}
+                <dl>{{field.label}}</dl>  
+                {{field}}
+                {%for error in field.errors%}
+                    {{error}}
+                {%endfor%}
+            {%endfor%}
+            <dl>{{mform.submit(class_="btn btn-primary")}}</dl>
+        </form>
+    </div>
+    <a href="{{ url_for('house_cur') }}" class="btn btn-info location">Посмотреть свое местоположение в доме</a>
+{%endblock%}

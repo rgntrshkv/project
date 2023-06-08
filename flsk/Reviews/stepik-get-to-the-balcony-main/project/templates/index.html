@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+
+        <h1>Готовы ли Вы отправиться в полное опасностей приключение?</h1>
+
+        <a href="{{ url_for('game') }}"><input type="submit" class="btn btn-info mb-2" value="Да, конечно!"></a>
+
+{% endblock %}

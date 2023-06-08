@@ -1,0 +1,27 @@
+{%extends "base.html"%}
+
+{%block app_content%}
+    <div class="content" >
+        <h2>Это наш дом!</h2>
+    </div>
+    <div class="content" >
+        <h3>Твоя цель - выйти на балкон!</h3>
+    </div>
+    <div class="content" >
+        <table class="house">
+            {% for i in range(HS.house|length)|reverse%}
+            <tr>
+                {% for j in range(HS.house[0]|length)%}
+                    {% if (HS.cur_position[0] == i and HS.cur_position[1] == j)%}
+                        <td class="cell living-cell">{{HS.house[i][j]}} *Вы находитесь здесь</td>
+                    {%else%}
+                        <td class="cell">{{HS.house[i][j]}}</td>
+                    {%endif%}
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+    <a href="{{ url_for('move') | safe}}" class="btn btn-warning home">Играть</a>
+    <a href="{{ url_for('index') }}" class="btn btn-info refresh">Вернуться на главную</a>
+{%endblock%}

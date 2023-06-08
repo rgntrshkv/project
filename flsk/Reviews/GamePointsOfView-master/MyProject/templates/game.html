@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+<div class="p-3 mb-3">
+    <div class="alert alert-primary" role="alert">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endwith %}
+    <form method="POST" action="{{ url_for('post_game') }}">
+        {{ form.crsf_token }}
+        <div class="col-sm-5 mb-3">
+            <p>{{ form.way.label }} {{ form.way() }}</p>
+            <p>{{ form.number_steps.label }} {{ form.number_steps() }}</p>
+        </div>
+        <p>{{ form.submit(class="btn btn-primary") }}</p>
+    </form>
+    <img src="static/images/dungeon_plan.png" class="img-fluid" alt="file is damaged">
+</div>
+{% endblock %}

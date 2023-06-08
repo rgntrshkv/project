@@ -1,0 +1,19 @@
+{%extends "base.html"%}
+
+{%block app_content%}
+    <h2 class="content">Давай создадим дом!</h2>
+    <h4 class="content">Если хочешь, можешь задать размеры нового дома</h4>
+    <div class="content" >
+        <form action = "{{ url_for('house') }}" method = "post">
+            {{form.csrf_token}}
+            {%for field in form if (field.name != "csrf_token" and field.name != "submit")%}
+                <dl>{{field.label}}</dl>  
+                {{field}}
+                {%for error in field.errors%}
+                    {{error}}
+                {%endfor%}
+            {%endfor%}
+            <dl>{{form.submit(class_="btn btn-primary")}}</dl>
+        </form>
+    </div>
+{%endblock%}

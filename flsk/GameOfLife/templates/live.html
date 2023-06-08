@@ -1,0 +1,33 @@
+{%extends "base.html" %}
+
+{%block app_content %}
+    <a href="{{ url_for('index') }}" class="btn btn-warning home">На главную</a>
+    <a href="{{ url_for('live_loop', tr1=tr, oldwf1=oldwf) | safe}}" class="btn btn-info refresh">Создать новую жизнь</a>
+    {%set wrld = GOL.world%}
+    {%set old_wrld = GOL.old_world%}
+    <div class="counter">{{ GOL.counter }}</div>
+    <table class="world">
+        {% for i in range(wrld|length)%}
+        <tr>
+            {% for j in range(wrld[0]|length)%}
+                {% if (wrld[i][j] == 1)%}
+                    <td class="cell living-cell"></td>
+                {% elif (wrld[i][j]==0 and old_wrld[i][j]==1 and oldwf=='1')%}
+                    <td class="cell dead-cell"></td>
+                {%else%}
+                    <td class="cell"></td>
+                {%endif%}
+            {%endfor%}
+        </tr>
+        {%endfor%}
+    </table>
+{%endblock%}
+
+{%block scripts%}
+    {{super()}}
+    <script>
+        setInterval(() => window.location.replace("{{ url_for('live_loop', tr1=tr, oldwf1=oldwf) | safe}}" ), '{{tr}}');
+    </script>
+{%endblock%}
+
+
