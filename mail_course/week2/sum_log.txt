@@ -1,0 +1,2 @@
+Execute <function summator at 0x00000182A7D616C0>
+664
